@@ -725,7 +725,7 @@ class BertModel(BertPreTrainedModel):
             import pickle
             with open("Ps.pkl", 'rb') as f:
                 Ps = pickle.load(f)
-            P = torch.Tensor(Ps[self.config.p_ind])
+            P = torch.Tensor(Ps[self.config.p_ind]).cuda()
             self.P=P
 
         self.embeddings = BertEmbeddings(config)
@@ -836,7 +836,7 @@ class BertModel(BertPreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
         )
-        
+
         if type(self.config.p_ind)==int:
             sequence_output = encoder_outputs[0].matmul(self.P)
         else:
