@@ -719,7 +719,7 @@ class BertModel(BertPreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
         self.config = config
-        if "p_index" in self.config:
+        if "p_index" in self.config.__dict__:
             if type(self.config.p_index)==int:
                 print("Using P!!!:", self.config.p_index)
                 import pickle
@@ -836,7 +836,7 @@ class BertModel(BertPreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
         )
-        if "p_index" in self.config:
+        if "p_index" in self.config.__dict__:
             if type(self.config.p_index)==int:
                 sequence_output = encoder_outputs[0].matmul(self.P)
             else:
