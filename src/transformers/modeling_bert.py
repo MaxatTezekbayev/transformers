@@ -720,12 +720,12 @@ class BertModel(BertPreTrainedModel):
         super().__init__(config)
         self.config = config
 
-        if type(self.config.p_ind)==int:
-            print("Using P!!!:", self.config.p_ind)
+        if type(self.config.p_index)==int:
+            print("Using P!!!:", self.config.p_index)
             import pickle
-            with open("Ps.pkl", 'rb') as f:
+            with open(self.config.p_path, 'rb') as f:
                 Ps = pickle.load(f)
-            P = torch.Tensor(Ps[self.config.p_ind]).cuda()
+            P = torch.Tensor(Ps[self.config.p_index]).cuda()
             self.P=P
 
         self.embeddings = BertEmbeddings(config)
@@ -837,7 +837,7 @@ class BertModel(BertPreTrainedModel):
             return_dict=return_dict,
         )
 
-        if type(self.config.p_ind)==int:
+        if type(self.config.p_index)==int:
             sequence_output = encoder_outputs[0].matmul(self.P)
         else:
             sequence_output = encoder_outputs[0]
