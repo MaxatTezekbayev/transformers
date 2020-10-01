@@ -838,7 +838,6 @@ class BertModel(BertPreTrainedModel):
         )
         if "p_index" in self.config.__dict__:
             if type(self.config.p_index)==int:
-                print('hello')
                 sequence_output = encoder_outputs[0]
                 for i in range(0, self.config.p_index+1):
                     sequence_output = sequence_output.matmul(self.Ps[i])
